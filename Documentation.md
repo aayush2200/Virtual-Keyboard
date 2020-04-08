@@ -25,28 +25,28 @@ How to edit markdown(.md) files
 
 ---
 
-#Week 1 (last three days)
+# Week 1 (last three days)
 
 >Learning python programming language
 
 first 2 days were reading the python official [documentation](https://docs.python.org/3/tutorial/index.html) the topics included -
 1. basic data types like lists strings and expressions using python IDLE.
 2. Read about control flow tools.
-- if, else and elif statements and their syntax
-- for and while loops
-- defining functions and other useful functions
+  - if, else and elif statements and their syntax
+  - for and while loops
+  - defining functions and other useful functions
 3. The various data structures
-- using lists as stack, queue.
-- list comprehensions.
-- tuples, sets and dictionaries
-- looping techniques
+  - using lists as stack, queue.
+  - list comprehensions.
+  - tuples, sets and dictionaries
+  - looping techniques
 4. Reading about formatting output and reading and writing data from a file.
 5. Errors and exception handling which include try, except and raise statements.
 6. Object Oriented proframming
-- classes and instances 
-- inheritance
-- Private variables 
-- generators and iterators
+  - classes and instances 
+  - inheritance
+  - Private variables 
+  - generators and iterators
 
 Next we have to go through the basics, data science tutorials and advanced tutorials(first half) from this [site](https://www.learnpython.org/)
 
