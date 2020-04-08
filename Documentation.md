@@ -25,7 +25,7 @@ How to edit markdown(.md) files
 
 ---
 
-# Week 1 (last three days)
+## Week 1 (last three days)
 
 >Learning python programming language
 
@@ -51,9 +51,9 @@ first 2 days were reading the python official [documentation](https://docs.pytho
 Next we have to go through the basics, data science tutorials and advanced tutorials(first half) from this [site](https://www.learnpython.org/) which covered the bascis of python, numpy and a bit of panda.
 In the last from this [site](https://scipy-lectures.org/) covered the first topic which included intro to important libraries of python like numpy, matplotlib and scipy.
 
-The last two sites were s so it extended to mid of next week
+The last two sites were advanced and long so it extended to mid of next week.
 
-# Week 2
+## Week 2
 
 In this week Our major focus was on the Assignment which was assigned as a team of 4. The assignment consisted of four problems in which each member has to one problem.
 I did the 4th problem.
