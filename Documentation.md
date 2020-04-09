@@ -138,3 +138,8 @@ cv2.imshow('image', img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 ```
+* In videos previously we used .get(____________) to get various parameters of video. Now we can use .set(______) to set that parameters value.
+
+* setMouseCallback(image window name, function which we define for any mouse event)
+
+*
