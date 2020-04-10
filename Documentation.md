@@ -199,6 +199,28 @@ cap.release()
 cv2.destroyAllWindows()
 ```
 
+* Thresholding and Adaptive thresholding
+> thresholding compares the pixel values at each point with given value and replaces that pixel according to the thresholding method done.
+
+> Adaptive thresholding is a better way than normal thresholding it looks around a block and calculates mean or gaussian around the block and uses that as threshold value for that block.
+
+```python
+import cv2 as cv
+import numpy as np
+
+img = cv.imread('sudoku.png',0)
+_, th1 = cv.threshold(img, 127, 255, cv.THRESH_BINARY)          # Applying normal threshold (source of image, threshold val, max val, type of threshold)
+th2 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)        # Adaptive threshold (source of image, maxval, adaptive threshold method, threshold method, size of block, constant which is subracted)
+th3 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
+
+cv.imshow("Image", img)
+cv.imshow("THRESH_BINARY", th1)
+cv.imshow("ADAPTIVE_THRESH_MEAN_C", th2)
+cv.imshow("ADAPTIVE_THRESH_GAUSSIAN_C", th3)
+
+cv.waitKey(0)
+cv.destroyAllWindows()
+```
 * Morphological transformations
 ```python
 import cv2
@@ -227,26 +249,4 @@ for i in range(8):
 
 plt.show()
 ```
-
-* Thresholding and Adaptive thresholding
-> thresholding compares the pixel values at each point with given value and replaces that pixel according to the thresholding method done.
-
-> Adaptive thresholding is a better way than normal thresholding it looks around a block and calculates mean or gaussian around the block and uses that as threshold value for that block.
-
-```python
-import cv2 as cv
-import numpy as np
-
-img = cv.imread('sudoku.png',0)
-_, th1 = cv.threshold(img, 127, 255, cv.THRESH_BINARY)          # Applying normal threshold (source of image, threshold val, max val, type of threshold)
-th2 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)        # Adaptive threshold (source of image, maxval, adaptive threshold method, threshold method, size of block, constant which is subracted)
-th3 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
-
-cv.imshow("Image", img)
-cv.imshow("THRESH_BINARY", th1)
-cv.imshow("ADAPTIVE_THRESH_MEAN_C", th2)
-cv.imshow("ADAPTIVE_THRESH_GAUSSIAN_C", th3)
-
-cv.waitKey(0)
-cv.destroyAllWindows()
-```
+![](https://github.com/aayush2200/Virtual-Keyboard/blob/master/upload.png)
