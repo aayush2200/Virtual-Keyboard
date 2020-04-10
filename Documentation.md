@@ -142,4 +142,111 @@ cv2.destroyAllWindows()
 
 * setMouseCallback(image window name, function which we define for any mouse event)
 
-*
+* createTrackbar(name of trackbar, window of whose trackbar we want to create, lower value, upper value, function to be called when trackbar value changes)
+
+* getTrackbarPos(trackbar name, window in which we want to place trackbar)
+
+* We can use bitwise operations on images also use cv2.bitwise_..... select from the options shown in pyCharm.
+
+* Object Detection and Object Tracking Using HSV Color Space
+```python
+import cv2
+import numpy as np
+
+def nothing(x):
+    pass
+
+cap = cv2.VideoCapture(0);
+
+cv2.namedWindow("Tracking")
+cv2.createTrackbar("LH", "Tracking", 0, 255, nothing)
+cv2.createTrackbar("LS", "Tracking", 0, 255, nothing)
+cv2.createTrackbar("LV", "Tracking", 0, 255, nothing)
+cv2.createTrackbar("UH", "Tracking", 255, 255, nothing)
+cv2.createTrackbar("US", "Tracking", 255, 255, nothing)
+cv2.createTrackbar("UV", "Tracking", 255, 255, nothing)
+
+while True:
+    #frame = cv2.imread('smarties.png')
+    _, frame = cap.read()
+
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)                # Converting BGR to HSV
+
+    l_h = cv2.getTrackbarPos("LH", "Tracking")                  # Setting trackbars to get lower HSV values and upper HSV values
+    l_s = cv2.getTrackbarPos("LS", "Tracking")
+    l_v = cv2.getTrackbarPos("LV", "Tracking")
+
+    u_h = cv2.getTrackbarPos("UH", "Tracking")
+    u_s = cv2.getTrackbarPos("US", "Tracking")
+    u_v = cv2.getTrackbarPos("UV", "Tracking")
+
+    l_b = np.array([l_h, l_s, l_v])                             # Creating Mask
+    u_b = np.array([u_h, u_s, u_v])
+
+    mask = cv2.inRange(hsv, l_b, u_b)
+
+    res = cv2.bitwise_and(frame, frame, mask=mask)              # Applying mask
+
+    cv2.imshow("frame", frame)
+    cv2.imshow("mask", mask)
+    cv2.imshow("res", res)
+
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+```
+
+* Morphological transformations
+```python
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+img = cv2.imread('smarties.png', cv2.IMREAD_GRAYSCALE)
+_, mask = cv2.threshold(img, 220, 255, cv2.THRESH_BINARY_INV)
+
+kernal = np.ones((5,5), np.uint8)
+
+dilation = cv2.dilate(mask, kernal, iterations=2)
+erosion = cv2.erode(mask, kernal, iterations=1)
+opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernal)
+closing = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernal)
+mg = cv2.morphologyEx(mask, cv2.MORPH_GRADIENT, kernal)
+th = cv2.morphologyEx(mask, cv2.MORPH_TOPHAT, kernal)
+
+titles = ['image', 'mask', 'dilation', 'erosion', 'opening', 'closing', 'mg', 'th']
+images = [img, mask, dilation, erosion, opening, closing, mg, th]
+
+for i in range(8):
+    plt.subplot(2, 4, i+1), plt.imshow(images[i], 'gray')
+    plt.title(titles[i])
+    plt.xticks([]),plt.yticks([])
+
+plt.show()
+```
+
+* Thresholding and Adaptive thresholding
+> thresholding compares the pixel values at each point with given value and replaces that pixel according to the thresholding method done.
+
+> Adaptive thresholding is a better way than normal thresholding it looks around a block and calculates mean or gaussian around the block and uses that as threshold value for that block.
+
+```python
+import cv2 as cv
+import numpy as np
+
+img = cv.imread('sudoku.png',0)
+_, th1 = cv.threshold(img, 127, 255, cv.THRESH_BINARY)          # Applying normal threshold (source of image, threshold val, max val, type of threshold)
+th2 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 2)        # Adaptive threshold (source of image, maxval, adaptive threshold method, threshold method, size of block, constant which is subracted)
+th3 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 11, 2)
+
+cv.imshow("Image", img)
+cv.imshow("THRESH_BINARY", th1)
+cv.imshow("ADAPTIVE_THRESH_MEAN_C", th2)
+cv.imshow("ADAPTIVE_THRESH_GAUSSIAN_C", th3)
+
+cv.waitKey(0)
+cv.destroyAllWindows()
+```
