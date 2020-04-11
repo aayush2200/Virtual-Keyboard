@@ -252,4 +252,4 @@ plt.show()
 ![](https://github.com/aayush2200/Virtual-Keyboard/blob/master/upload.png)
 
 * Soothing images and applying filters
->We can apply ifferent morphological operations like 2D Convolution ( Image Filtering ) and  Image Blurring (Image Smoothing) using Averaging, Gaussian Blurring, Median Blurring, Bilateral Filtering (for edge detection) etc. We will see different functions like : cv.filter2D(), cv.blur(), cv.GaussianBlur(), cv.medianBlur(), cv.bilateralFilter() etc.
+>We can apply different morphological operations like 2D Convolution ( Image Filtering ) and  Image Blurring (Image Smoothing) using Averaging, Gaussian Blurring, Median Blurring, Bilateral Filtering (for edge detection) etc. We will see different functions like : cv.filter2D(), cv.blur(), cv.GaussianBlur(), cv.medianBlur(), cv.bilateralFilter() etc.
