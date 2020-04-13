@@ -253,3 +253,164 @@ plt.show()
 
 * Soothing images and applying filters
 >We can apply different morphological operations like 2D Convolution ( Image Filtering ) and  Image Blurring (Image Smoothing) using Averaging, Gaussian Blurring, Median Blurring, Bilateral Filtering (for edge detection) etc. We will see different functions like : cv.filter2D(), cv.blur(), cv.GaussianBlur(), cv.medianBlur(), cv.bilateralFilter() etc.
+
+* Edge detection
+```python
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+img = cv2.imread("messi5.jpg", cv2.IMREAD_GRAYSCALE)
+lap = cv2.Laplacian(img, cv2.CV_64F, ksize=3)
+lap = np.uint8(np.absolute(lap))
+sobelX = cv2.Sobel(img, cv2.CV_64F, 1, 0)
+sobelY = cv2.Sobel(img, cv2.CV_64F, 0, 1)
+edges = cv2.Canny(img,100,200)
+
+sobelX = np.uint8(np.absolute(sobelX))
+sobelY = np.uint8(np.absolute(sobelY))
+
+sobelCombined = cv2.bitwise_or(sobelX, sobelY)
+
+titles = ['image', 'Laplacian', 'sobelX', 'sobelY', 'sobelCombined', 'Canny']
+images = [img, lap, sobelX, sobelY, sobelCombined, edges]
+for i in range(6):
+    plt.subplot(2, 3, i+1), plt.imshow(images[i], 'gray')
+    plt.title(titles[i])
+    plt.xticks([]),plt.yticks([])
+
+plt.show()
+```
+
+* Gaussian pyramids and laplacian pyramids, Image Blending
+```python
+import cv2
+import numpy as np
+apple = cv2.imread('apple.jpg')
+orange = cv2.imread('orange.jpg')
+print(apple.shape)
+print(orange.shape)
+apple_orange = np.hstack((apple[:, :256], orange[:, 256:]))
+
+# generate Gaussian pyramid for apple
+apple_copy = apple.copy()
+gp_apple = [apple_copy]
+for i in range(6):
+    apple_copy = cv2.pyrDown(apple_copy)
+    gp_apple.append(apple_copy)
+
+
+# generate Gaussian pyramid for orange
+orange_copy = orange.copy()
+gp_orange = [orange_copy]
+for i in range(6):
+    orange_copy = cv2.pyrDown(orange_copy)
+    gp_orange.append(orange_copy)
+
+# generate Laplacian Pyramid for apple
+apple_copy = gp_apple[5]
+lp_apple = [apple_copy]
+for i in range(5, 0, -1):
+    gaussian_expanded = cv2.pyrUp(gp_apple[i])
+    laplacian = cv2.subtract(gp_apple[i-1], gaussian_expanded)
+    lp_apple.append(laplacian)
+
+# generate Laplacian Pyramid for orange
+orange_copy = gp_orange[5]
+lp_orange = [orange_copy]
+for i in range(5, 0, -1):
+    gaussian_expanded = cv2.pyrUp(gp_orange[i])
+    laplacian = cv2.subtract(gp_orange[i-1], gaussian_expanded)
+    lp_orange.append(laplacian)
+
+# Now add left and right halves of images in each level
+apple_orange_pyramid = []
+n = 0
+for apple_lap, orange_lap in zip(lp_apple, lp_orange):
+    n += 1
+    cols, rows, ch = apple_lap.shape
+    laplacian = np.hstack((apple_lap[:, 0:int(cols/2)], orange_lap[:, int(cols/2):]))
+    apple_orange_pyramid.append(laplacian)
+# now reconstruct
+apple_orange_reconstruct = apple_orange_pyramid[0]
+for i in range(1, 6):
+    apple_orange_reconstruct = cv2.pyrUp(apple_orange_reconstruct)
+    apple_orange_reconstruct = cv2.add(apple_orange_pyramid[i], apple_orange_reconstruct)
+
+cv2.imshow("apple", apple)
+cv2.imshow("orange", orange)
+cv2.imshow("apple_orange", apple_orange)
+cv2.imshow("apple_orange_reconstruct", apple_orange_reconstruct)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
+* Finding and drawing contours
+```python
+import numpy as np
+import cv2
+
+img = cv2.imread('baseball.png')
+imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ret, thresh = cv2.threshold(imgray, 127, 255, 0)
+contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)  # finds the contour
+print("Number of contours = " + str(len(contours)))
+print(contours[0])
+
+cv2.drawContours(img, contours, -1, (0, 255, 0), 3)             # Use -1 for drawing all contours or can use noraml indexing for single contour
+cv2.drawContours(imgray, contours, -1, (0, 255, 0), 3)
+
+cv2.imshow('Image', img)
+cv2.imshow('Image GRAY', imgray)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+* Object Detection and Tracking Example
+```python
+import cv2
+import numpy as np
+
+cap = cv2.VideoCapture('vtest.avi')
+frame_width = int( cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+
+frame_height =int( cap.get( cv2.CAP_PROP_FRAME_HEIGHT))
+
+fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
+
+out = cv2.VideoWriter("output.avi", fourcc, 5.0, (1280,720))
+
+ret, frame1 = cap.read()
+ret, frame2 = cap.read()
+print(frame1.shape)
+while cap.isOpened():
+    diff = cv2.absdiff(frame1, frame2)
+    gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (5,5), 0)
+    _, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
+    dilated = cv2.dilate(thresh, None, iterations=3)
+    contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    for contour in contours:
+        (x, y, w, h) = cv2.boundingRect(contour)
+
+        if cv2.contourArea(contour) < 900:
+            continue
+        cv2.rectangle(frame1, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        cv2.putText(frame1, "Status: {}".format('Movement'), (10, 20), cv2.FONT_HERSHEY_SIMPLEX,
+                    1, (0, 0, 255), 3)
+    #cv2.drawContours(frame1, contours, -1, (0, 255, 0), 2)
+
+    image = cv2.resize(frame1, (1280,720))
+    out.write(image)
+    cv2.imshow("feed", frame1)
+    frame1 = frame2
+    ret, frame2 = cap.read()
+
+    if cv2.waitKey(40) == 27:
+        break
+
+cv2.destroyAllWindows()
+cap.release()
+out.release()
+```
+*
