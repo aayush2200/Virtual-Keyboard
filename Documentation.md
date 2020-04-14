@@ -66,7 +66,7 @@ In this week the first two days were kept to the solutions of the assignment and
 
 Then we started Image Processing with OpenCV library of python from these [video](https://www.youtube.com/watch?v=kdLM6AOd2vc&list=PLS1QulWo1RIa7D1O6skqDQ-JZ1GGHKK-K) tutorials and from [these](https://www.geeksforgeeks.org/opencv-python-tutorial/).
 
-**Notes** (OpenCV)
+#### Notes (OpenCV)
 Images consist of pixels whose values are stored in arrays. Grayscale images are 2D array in which the value at a position gives the intensity of the pixel at that location. Colored images have 3 channels BGR in openCV, then it is a 3D array in which each channel's 2D matrix contains the intensity of that particular color.
 The various Functions involved in OpenCV are-
 
@@ -100,7 +100,8 @@ The various Functions involved in OpenCV are-
 
 * cv2.erode() method
 > cv2.erode() method is used to perform erosion on the image. The basic idea of erosion is just like soil erosion only, it erodes away the boundaries of foreground object. It is normally performed on binary images.
->**Syntax:** cv2.erode(src, kernel[, dst[, anchor[, iterations[, borderType[, borderValue]]]]])
+
+**Syntax:** cv2.erode(src, kernel[, dst[, anchor[, iterations[, borderType[, borderValue]]]]])
 Parameters:
 **src:** It is the image which is to be eroded .
 **kernel:** A structuring element used for erosion. If element = Mat(), a 3 x 3 rectangular structuring element is used. Kernel can be created using getStructuringElement.
