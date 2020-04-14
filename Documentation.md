@@ -72,8 +72,41 @@ The various Functions involved in OpenCV are-
 
 * cv2.imread(path)
 > reading the image, usually stored in variable
+
 * cv2.imshow(window name, variable where image is stored)
 > shows the image
+
 * cv2.imwrite(filename, image)
 > for saving the image, *filename*: A string representing the file name. The filename must include image format like .jpg, .png, etc.
 *image*: It is the image that is to be saved.
+
+* cv2.split(variable where image is stored)
+> splits the image into corresponding 3 channels of image
+
+* cv2.add(img1, img2)
+* cv2.addWeighted(img1, weight1, img2. weight2, gammavalue)
+> the above two functions are used for adding images as name suggests
+
+* cv2.subract(img1, img2)
+
+* cv2.bitwise_and(img1, img2)
+* cv2.bitwise_or(img1, img2)
+* cv2.bitwise_xor(img1, img2)
+* cv2.bitwise_not(img1)
+> bitwise operations can be applied on the images.
+
+* cv2.resize(source, (width, height))
+> used for resizing of images
+
+* cv2.erode() method
+> cv2.erode() method is used to perform erosion on the image. The basic idea of erosion is just like soil erosion only, it erodes away the boundaries of foreground object. It is normally performed on binary images.
+>**Syntax:** cv2.erode(src, kernel[, dst[, anchor[, iterations[, borderType[, borderValue]]]]])
+Parameters:
+**src:** It is the image which is to be eroded .
+**kernel:** A structuring element used for erosion. If element = Mat(), a 3 x 3 rectangular structuring element is used. Kernel can be created using getStructuringElement.
+**dst:** It is the output image of the same size and type as src.
+**anchor:** It is a variable of type integer representing anchor point and it’s default value Point is (-1, -1) which means that the anchor is at the kernel center.
+borderType:** It depicts what kind of border to be added. It is defined by flags like cv2.BORDER_CONSTANT, cv2.BORDER_REFLECT, etc.
+**iterations:** It is number of times erosion is applied.
+**borderValue:** It is border value in case of a constant border.
+**Return Value:** It returns an image.
