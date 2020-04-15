@@ -100,14 +100,71 @@ The various Functions involved in OpenCV are-
 
 * cv2.erode() method
 > cv2.erode() method is used to perform erosion on the image. The basic idea of erosion is just like soil erosion only, it erodes away the boundaries of foreground object. It is normally performed on binary images.
+>It needs two inputs, one is our original image, second one is called structuring element or kernel which decides the nature of operation. A pixel in the original image (either 1 or 0) will be considered 1 only if all the pixels under the kernel is 1, otherwise it is eroded (made to zero).
+```python
+# Python program to explain cv2.erode() method 
 
-**Syntax:** cv2.erode(src, kernel[, dst[, anchor[, iterations[, borderType[, borderValue]]]]])
-Parameters:
-**src:** It is the image which is to be eroded .
-**kernel:** A structuring element used for erosion. If element = Mat(), a 3 x 3 rectangular structuring element is used. Kernel can be created using getStructuringElement.
-**dst:** It is the output image of the same size and type as src.
-**anchor:** It is a variable of type integer representing anchor point and it’s default value Point is (-1, -1) which means that the anchor is at the kernel center.
-borderType:** It depicts what kind of border to be added. It is defined by flags like cv2.BORDER_CONSTANT, cv2.BORDER_REFLECT, etc.
-**iterations:** It is number of times erosion is applied.
-**borderValue:** It is border value in case of a constant border.
-**Return Value:** It returns an image.
+# importing cv2 
+import cv2 
+
+# importing numpy 
+import numpy as np 
+
+# path 
+path = r'C:\Users\Rajnish\Desktop\geeksforgeeks\geeks.png'
+
+# Reading an image in default mode 
+image = cv2.imread(path) 
+
+# Window name in which image is displayed 
+window_name = 'Image'
+
+# Creating kernel 
+kernel = np.ones((5, 5), np.uint8) 
+
+# Using cv2.erode() method 
+image = cv2.erode(image, kernel) 
+
+# Displaying the image 
+cv2.imshow(window_name, image) 
+```
+
+* Blurring of image
+> There are three types of blurring techniques in openCV
+    - **Gaussian blur** is the result of blurring an image by a Gaussian function. It is a widely used effect in graphics software, typically to reduce image noise and reduce detail.
+    - **Median Blur:** The Median Filter is a non-linear digital filtering technique, often used to remove noise from an image or signal. under certain conditions, it preserves edges while removing noise. It is one of the best algorithms to remove Salt and pepper noise.
+    - **Bilateral Blur:** A bilateral filter is a non-linear, edge-preserving, and noise-reducing smoothing filter for images. It replaces the intensity of each pixel with a weighted average of intensity values from nearby pixels.
+```python
+# importing libraries 
+import cv2 
+import numpy as np 
+
+image = cv2.imread('C://Geeksforgeeks//image_processing//fruits.jpg') 
+
+cv2.imshow('Original Image', image) 
+cv2.waitKey(0) 
+
+# Gaussian Blur 
+Gaussian = cv2.GaussianBlur(image, (7, 7), 0) 
+cv2.imshow('Gaussian Blurring', Gaussian) 
+cv2.waitKey(0) 
+
+# Median Blur 
+median = cv2.medianBlur(image, 5) 
+cv2.imshow('Median Blurring', median) 
+cv2.waitKey(0) 
+
+
+# Bilateral Blur 
+bilateral = cv2.bilateralFilter(image, 9, 75, 75) 
+cv2.imshow('Bilateral Blurring', bilateral) 
+cv2.waitKey(0) 
+cv2.destroyAllWindows() 
+```
+* cv2.copyMakeBorder(source, top, bottom, left, right, bordertype)
+> adds border around image, there are various border types in openCV google it.
+
+* cv2.cvtColor(source, conversion option)
+> used for converting from BGR to HSV or Grayscale, various conversion methods available.
+
+*
