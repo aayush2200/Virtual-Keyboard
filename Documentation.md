@@ -66,105 +66,25 @@ In this week the first two days were kept to the solutions of the assignment and
 
 Then we started Image Processing with OpenCV library of python from these [video](https://www.youtube.com/watch?v=kdLM6AOd2vc&list=PLS1QulWo1RIa7D1O6skqDQ-JZ1GGHKK-K) tutorials and from [these](https://www.geeksforgeeks.org/opencv-python-tutorial/).
 
-#### Notes (OpenCV)
+During these tutorials we came to know various things about images and how they are handeled.
 Images consist of pixels whose values are stored in arrays. Grayscale images are 2D array in which the value at a position gives the intensity of the pixel at that location. Colored images have 3 channels BGR in openCV, then it is a 3D array in which each channel's 2D matrix contains the intensity of that particular color.
-The various Functions involved in OpenCV are-
 
-* cv2.imread(path)
-> reading the image, usually stored in variable
+During this week we were also told to practice questions of python on Hackerrank to get more grip on the language.
 
-* cv2.imshow(window name, variable where image is stored)
-> shows the image
+## Week4
 
-* cv2.imwrite(filename, image)
-> for saving the image, *filename*: A string representing the file name. The filename must include image format like .jpg, .png, etc.
-*image*: It is the image that is to be saved.
+In this week first few days we completed the geekforgeeks tutorials on openCV and then we were asked to make notes of openCV video tutorials we watched.
+The video tutorials consisted of total 41 videos having various algos, functions and concepts which we can't remember only just by watching the videos.
+So we made our own notes in the GitHub repo each indiviual were given to choose two videos from the tutorial write the concept, function used and heavily comment the code used in the video.
 
-* cv2.split(variable where image is stored)
-> splits the image into corresponding 3 channels of image
+After that we were given an indiviual project.
+The project consisted of creating the invisiblity cloak of Harry Potter using openCV.
 
-* cv2.add(img1, img2)
-* cv2.addWeighted(img1, weight1, img2. weight2, gammavalue)
-> the above two functions are used for adding images as name suggests
+The project was fun and it included the following steps:-
+1. Capture and store the background frame.
+2. Detect the red colored cloth using color detection algorithm.
+3. Segment out the red colored cloth by generating a mask.
+4. Generate the final augmented output to create the magical effect
 
-* cv2.subract(img1, img2)
-
-* cv2.bitwise_and(img1, img2)
-* cv2.bitwise_or(img1, img2)
-* cv2.bitwise_xor(img1, img2)
-* cv2.bitwise_not(img1)
-> bitwise operations can be applied on the images.
-
-* cv2.resize(source, (width, height))
-> used for resizing of images
-
-* cv2.erode() method
-> cv2.erode() method is used to perform erosion on the image. The basic idea of erosion is just like soil erosion only, it erodes away the boundaries of foreground object. It is normally performed on binary images.
->It needs two inputs, one is our original image, second one is called structuring element or kernel which decides the nature of operation. A pixel in the original image (either 1 or 0) will be considered 1 only if all the pixels under the kernel is 1, otherwise it is eroded (made to zero).
-```python
-# Python program to explain cv2.erode() method 
-
-# importing cv2 
-import cv2 
-
-# importing numpy 
-import numpy as np 
-
-# path 
-path = r'C:\Users\Rajnish\Desktop\geeksforgeeks\geeks.png'
-
-# Reading an image in default mode 
-image = cv2.imread(path) 
-
-# Window name in which image is displayed 
-window_name = 'Image'
-
-# Creating kernel 
-kernel = np.ones((5, 5), np.uint8) 
-
-# Using cv2.erode() method 
-image = cv2.erode(image, kernel) 
-
-# Displaying the image 
-cv2.imshow(window_name, image) 
-```
-
-* Blurring of image
-> There are three types of blurring techniques in openCV
-    - **Gaussian blur** is the result of blurring an image by a Gaussian function. It is a widely used effect in graphics software, typically to reduce image noise and reduce detail.
-    - **Median Blur:** The Median Filter is a non-linear digital filtering technique, often used to remove noise from an image or signal. under certain conditions, it preserves edges while removing noise. It is one of the best algorithms to remove Salt and pepper noise.
-    - **Bilateral Blur:** A bilateral filter is a non-linear, edge-preserving, and noise-reducing smoothing filter for images. It replaces the intensity of each pixel with a weighted average of intensity values from nearby pixels.
-```python
-# importing libraries 
-import cv2 
-import numpy as np 
-
-image = cv2.imread('C://Geeksforgeeks//image_processing//fruits.jpg') 
-
-cv2.imshow('Original Image', image) 
-cv2.waitKey(0) 
-
-# Gaussian Blur 
-Gaussian = cv2.GaussianBlur(image, (7, 7), 0) 
-cv2.imshow('Gaussian Blurring', Gaussian) 
-cv2.waitKey(0) 
-
-# Median Blur 
-median = cv2.medianBlur(image, 5) 
-cv2.imshow('Median Blurring', median) 
-cv2.waitKey(0) 
-
-
-# Bilateral Blur 
-bilateral = cv2.bilateralFilter(image, 9, 75, 75) 
-cv2.imshow('Bilateral Blurring', bilateral) 
-cv2.waitKey(0) 
-cv2.destroyAllWindows() 
-```
-* cv2.copyMakeBorder(source, top, bottom, left, right, bordertype)
-> adds border around image, there are various border types in openCV google it.
-
-* cv2.cvtColor(source, conversion option)
-> used for converting from BGR to HSV or Grayscale, various conversion methods available.
-
-*
+The project took around 3-4 days to complete as segmenting the cloth of our choice color required time to find and calibrate the HSV values and figuring out how to show background once cloth was detected.
+The project code was easily available on the internet but our mentor asked us do everything from scracth so that we learn more.
